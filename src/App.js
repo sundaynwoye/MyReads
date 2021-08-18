@@ -3,11 +3,11 @@ import * as BooksAPI from './BooksAPI'
 import './App.css';
 import MainPage from './MainPage';
 import SearchPage from './SearchPage';
+import { Route } from 'react-router-dom';
 
 class BooksApp extends React.Component {
   state = {
-    books: [],
-    showSearchPage: false
+    books: []
   }
   
   componentDidMount() {
@@ -36,14 +36,15 @@ class BooksApp extends React.Component {
   render() {
     return (
       <div className="app">
-        {this.state.showSearchPage ? (
-         <SearchPage books={this.state.books} shelfChanger={this.shelfChanger} /> 
-        ) : (
+      <Route path='/search' render={() => (
+      <SearchPage books={this.state.books} shelfChanger={this.shelfChanger} />
+    )} />
+		<Route exact path='/' render={() => (
           <MainPage books={this.state.books} showSearchPage={this.showSearchPage} shelfChanger={this.shelfChanger} />
-        )}
+        )} />
       </div>
     )
   }
 }
 
-export default BooksApp
+export default BooksApp;
