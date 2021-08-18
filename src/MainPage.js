@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Books from './Books';
+import PropTypes from 'prop-types';
 
 class MainPage extends Component {
   render() {
@@ -25,11 +26,15 @@ class MainPage extends Component {
               </div>
             </div>
             <div className="open-search">
-              <a onClick={() => this.setState({ showSearchPage: true })}>Add a book</a>
+              <a onClick={this.props.showSearchPage}>Add a book</a>
             </div>
           </div>
     )
   }
+}
+
+MainPage.propTypes = {
+  books: PropTypes.array.isRequired
 }
 
 export default MainPage;
