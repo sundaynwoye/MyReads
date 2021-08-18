@@ -43,7 +43,7 @@ class SearchPage extends Component {
               </div>
             </div>
             <div className="search-books-results">
-              <Books books={showingSearchBooks} />
+              <Books books={showingSearchBooks} shelfChanger={this.props.shelfChanger} />
             </div>
           </div>
     )

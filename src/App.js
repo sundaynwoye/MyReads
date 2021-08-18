@@ -23,13 +23,23 @@ class BooksApp extends React.Component {
     this.setState({ showSearchPage: true })
   }
   
+  shelfChanger = (book, shelf) => {
+    BooksAPI.update(book, shelf)
+    .then((res) => {
+      book.shelf = shelf;
+      this.setState((currentState) => ({
+        books: currentState.books.filter(b => b.id !== book.id).concat([book])
+      }))
+    })
+  }
+  
   render() {
     return (
       <div className="app">
         {this.state.showSearchPage ? (
-         <SearchPage books={this.state.books} /> 
+         <SearchPage books={this.state.books} shelfChanger={this.shelfChanger} /> 
         ) : (
-          <MainPage books={this.state.books} showSearchPage={this.showSearchPage} />
+          <MainPage books={this.state.books} showSearchPage={this.showSearchPage} shelfChanger={this.shelfChanger} />
         )}
       </div>
     )
