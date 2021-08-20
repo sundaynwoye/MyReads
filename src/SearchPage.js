@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Books from './Books';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import * as BooksAPI from './BooksAPI';
 
 class SearchPage extends Component {
   static proptypes = {
@@ -10,20 +11,29 @@ class SearchPage extends Component {
   }
   
   state = {
-    query: ''
+    query: '',
+    searchedBooks: []
   }
   
   updateQuery = (query) => {
-    this.setState(() => ({
-      query: query.trim()
+    BooksAPI.search(query.trim(), 20)
+    .then((books) => {
+      const searchedBooks = Array.isArray(books) ? books : [];
+      searchedBooks.map(searchedBook => {
+        const checkBook = this.props.books.find(b => b.id === searchedBook.id); 
+        return checkBook ? searchedBook.shelf = checkBook.shelf : searchedBook.shelf = 'none'
+      })
+      this.setState(() => ({
+      query: query,
+        searchedBooks: searchedBooks
     }))
+    })
   }
   
   render() {
-    const { query } = this.state;
-    const { books } = this.props;
+    const { query, searchedBooks } = this.state;
     
-    const showingSearchBooks = query === '' ? books : books.filter(b => (
+    const showingSearchBooks = query === '' ? [] : searchedBooks.filter(b => (
       b.title.toLowerCase().includes(query.toLowerCase())
     ))
     

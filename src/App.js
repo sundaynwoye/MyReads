@@ -1,5 +1,5 @@
 import React  from 'react';
-import * as BooksAPI from './BooksAPI'
+import * as BooksAPI from './BooksAPI';
 import './App.css';
 import MainPage from './MainPage';
 import SearchPage from './SearchPage';
@@ -18,11 +18,7 @@ class BooksApp extends React.Component {
       }))
     })
   }
-  
-  showSearchPage = () => {
-    this.setState({ showSearchPage: true })
-  }
-  
+   
   shelfChanger = (book, shelf) => {
     BooksAPI.update(book, shelf)
     .then((res) => {
@@ -40,7 +36,7 @@ class BooksApp extends React.Component {
       <SearchPage books={this.state.books} shelfChanger={this.shelfChanger} />
     )} />
 		<Route exact path='/' render={() => (
-          <MainPage books={this.state.books} showSearchPage={this.showSearchPage} shelfChanger={this.shelfChanger} />
+          <MainPage books={this.state.books} shelfChanger={this.shelfChanger} />
         )} />
       </div>
     )
